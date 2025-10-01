@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Colección de árboles: cualquiera puede leer, solo usuarios autenticados pueden escribir.
+    match /trees/{treeId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Colección de especies: cualquiera puede leer, solo los usuarios pueden escribir (por si se añade una nueva).
+    match /species/{speciesId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Colección de usuarios: cada usuario solo puede ver y editar su propio documento.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
