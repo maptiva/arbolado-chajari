@@ -39,7 +39,6 @@ const MarkerClusterComponent: React.FC<{ trees: Tree[] }> = ({ trees }) => {
             const marker = L.marker([tree.location.latitude, tree.location.longitude]);
             const popupContent = `
                 <div class="w-48">
-                    <img src="${tree.imageUrl}" alt="${tree.speciesName}" class="w-full h-32 object-cover rounded-t-lg" />
                     <div class="p-2">
                         <h3 class="font-bold text-md">${tree.speciesName}</h3>
                         <p class="text-sm text-gray-600">Estado: ${tree.healthStatus}</p>
@@ -79,8 +78,7 @@ const MapPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    // Query only for trees that are marked as public.
-    const q = query(collection(db, "trees"), where("isPublic", "==", true));
+    const q = query(collection(db, "trees"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const treesData: Tree[] = [];
       querySnapshot.forEach((doc) => {

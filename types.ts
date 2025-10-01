@@ -7,12 +7,10 @@ export interface Tree {
   estimatedAge: number;
   healthStatus: 'Bueno' | 'Regular' | 'Malo';
   notes: string;
-  imageUrl: string;
   location: GeoPoint;
   address: string;
   createdBy: string;
   createdAt: Timestamp;
-  isPublic?: boolean;
 }
 
 export interface Species {
