@@ -21,6 +21,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Configure Git
+        run: |
+          git config --global user.name 'maptiva'
+          git config --global user.email 'maptiva.sig.app@gmail.com'
+
       - name: Deploy to GitHub Pages
         run: npm run deploy
         env:
