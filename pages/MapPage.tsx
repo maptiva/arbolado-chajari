@@ -19,6 +19,25 @@ L.Icon.Default.mergeOptions({
 });
 
 
+const verifiedIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const unverifiedIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+
 const MarkerClusterComponent: React.FC<{ trees: Tree[] }> = ({ trees }) => {
     const map = useMap();
     const markerClusterGroupRef = useRef<L.MarkerClusterGroup | null>(null);
@@ -36,7 +55,8 @@ const MarkerClusterComponent: React.FC<{ trees: Tree[] }> = ({ trees }) => {
         mc_group.clearLayers();
 
         trees.forEach(tree => {
-            const marker = L.marker([tree.location.latitude, tree.location.longitude]);
+            const icon = tree.status === 'verified' ? verifiedIcon : unverifiedIcon;
+            const marker = L.marker([tree.location.latitude, tree.location.longitude], { icon });
             const popupContent = `
                 <div class="w-48">
                     <div class="p-2">
@@ -101,7 +121,7 @@ const MapPage: React.FC = () => {
           <p>Cargando mapa y datos...</p>
         </div>
       ) : (
-        <MapContainer center={[-30.76, -57.98]} zoom={13} scrollWheelZoom={true} className="h-full w-full">
+        <MapContainer center={[-30.76, -57.98]} zoom={14} scrollWheelZoom={true} className="h-full w-full">
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"

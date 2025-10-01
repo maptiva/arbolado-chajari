@@ -11,6 +11,7 @@ export interface Tree {
   address: string;
   createdBy: string;
   createdAt: Timestamp;
+  status: 'verified' | 'unverified';
 }
 
 export interface Species {

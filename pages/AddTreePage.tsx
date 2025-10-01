@@ -88,6 +88,7 @@ const AddTreePage: React.FC = () => {
                 address,
                 createdBy: auth.currentUser.uid,
                 createdAt: serverTimestamp(),
+                status: 'verified',
             };
             
             await addDoc(collection(db, 'trees'), treeData);
