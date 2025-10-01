@@ -1,0 +1,35 @@
+Rol: Eres un desarrollador Full-Stack senior, experto en la creación de Aplicaciones Web Progresivas (PWA) geolocalizadas, con un enfoque en la experiencia de usuario y el rendimiento. Tu código es limpio, modular, sigue las mejores prácticas y está bien documentado.
+Objetivo Principal: Generar el código base completo para una PWA de ciencia ciudadana llamada "Arbolado Chajarí". La aplicación permitirá a los usuarios autenticados registrar árboles y a cualquier visitante explorar los datos en un mapa interactivo y de alto rendimiento. La inspiración es arboladourbano.com, pero con una ejecución técnica moderna, escalable y optimizada.
+Stack Tecnológico:
+Base de Datos: Google Firebase - Firestore.
+Almacenamiento de Archivos: Google Firebase - Storage.
+Autenticación: Google Firebase - Authentication (Email/Contraseña y Google Sign-In).
+Frontend: React con Vite (usando TypeScript).
+Estilos: Tailwind CSS para un diseño responsivo y mobile-first.
+Mapas: Leaflet.js junto con react-leaflet para la integración con React. Incluye la librería leaflet.markercluster para la agrupación de marcadores.
+Optimización de Imágenes: browser-image-compression para optimizar las imágenes en el cliente antes de subirlas.
+Requisitos Detallados del Proyecto:
+1. Backend y Configuración (Firebase):
+Firestore:
+Colección trees: Cada documento representará un árbol con los campos: speciesName (string), estimatedAge (number), healthStatus (string: 'Bueno', 'Regular', 'Malo'), notes (string), imageUrl (string, URL de Storage), location (GeoPoint de Firestore), address (string), createdBy (string, UID del usuario), createdAt (timestamp).
+Colección species: Para almacenar una lista de especies comunes con campos como commonName (string) y scientificName (string).
+Storage: Configura reglas de seguridad para que solo los usuarios autenticados puedan escribir en la carpeta tree_images/.
+Authentication: Habilita los proveedores de Email/Contraseña y Google Sign-In.
+2. Frontend (Aplicación React - PWA):
+Configuración PWA: Incluye un manifest.json configurado y un service worker básico para capacidades offline y de instalación.
+Componentes y Páginas a Crear:
+AuthPage.jsx: Página de inicio de sesión y registro, protegida para que no sea accesible si el usuario ya está logueado.
+AddTreePage.jsx (Ruta Protegida): El corazón de la carga de datos.
+Formulario: Debe incluir todos los campos necesarios.
+Desplegable de Especies: El campo speciesName debe ser un desplegable que lea los nombres comunes de la colección species de Firestore. Debe incluir una opción para añadir "Otra" si la especie no está en la lista.
+Ubicación Precisa: Un pequeño mapa de Leaflet donde el usuario pueda hacer clic para colocar un marcador. Al colocarlo, una llamada a una API de geocodificación inversa (como la de Nominatim de OpenStreetMap) debe obtener y rellenar automáticamente el campo de dirección de texto.
+Carga de Fotos Optimizada: Un botón "Subir Fotografía" que active la cámara/galería del móvil. Antes de la subida, la imagen seleccionada debe ser procesada por browser-image-compression para reducir su tamaño (ej: max 1080px de ancho, calidad 0.8). Se debe mostrar una vista previa de la imagen optimizada.
+Lógica de Envío: El flujo al guardar es: 1) Subir la imagen optimizada a Firebase Storage. 2) Obtener la URL de descarga. 3) Guardar el nuevo documento del árbol en Firestore con todos los datos.
+MapPage.jsx (Página Principal): La página de visualización pública.
+Mapa Base Limpio: Debe mostrar un mapa Leaflet a pantalla completa. Usa un proveedor de "tiles" minimalista y limpio, como CartoDB Positron.
+Carga de Datos: Debe leer en tiempo real la colección trees de Firestore.
+Clusters de Marcadores: Implementa leaflet.markercluster para agrupar los árboles cuando el mapa está alejado. Los clusters deben mostrar el número de árboles que contienen.
+Popup Informativo: Al hacer clic en un marcador individual, se debe abrir un popup que muestre la foto del árbol (una miniatura), su especie y su estado general.
+Navegación: Una barra de navegación simple con enlaces al Mapa, "Añadir Árbol" (solo para usuarios logueados) y el botón de Iniciar/Cerrar Sesión.
+Tarea a Realizar:
+Genera la estructura completa del proyecto en React (Vite + TS). Escribe el código para el archivo de configuración de Firebase y para los componentes y páginas principales (AuthPage, AddTreePage, MapPage). Asegúrate de incluir la lógica completa para la autenticación, la subida de imágenes optimizadas y la visualización de datos en el mapa con clusters. El código debe estar listo para instalar dependencias (npm install) y ejecutarse (npm run dev).

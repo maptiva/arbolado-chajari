@@ -1,0 +1,5 @@
+{
+  "name": "Arbolado Chajarí",
+  "description": "A citizen science Progressive Web App to map and catalog trees in Chajarí. Users can register trees with photos and location, and explore all registered trees on an interactive map.",
+  "requestFramePermissions": []
+}
